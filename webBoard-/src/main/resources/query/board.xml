@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.board.dao.BoardDAO">
+
+<sql id="boardcommon">
+select b_num,b_name,b_title,b_content,b_pwd,b_date ,hit from spring_board1
+
+<where>
+     <if test="option=='all'"> </if>
+     <if test="option=='b_name'"><![CDATA[ b_name like '%' || #{keyword} || '%']]></if> 
+     <if test="option=='b_title'"><![CDATA[ b_title like '%' || #{keyword} || '%']]></if> 
+     <if test="option=='b_date'"><![CDATA[ b_date like '%' || #{keyword} || '%']]></if> 
+       	<if test="start != null and start !=''">
+     <!-- b_date between #{start} and #{end}
+ -->  	  
+   b_date between to_date(#{start}, 'yyyy/mm/dd') and  to_date(#{end}, 'yyyy/mm/dd')
+  	</if>
+</where> 
+</sql>
+
+<select id="boardlist" parameterType="board" resultType="board">
+
+select b_num,b_name,b_title,b_content,b_pwd,b_date ,hit 
+
+from (select list.*, rownum as rnum from(
+
+   <include refid="boardcommon"></include>
+
+  <choose>
+    <when test="order_by=='b_num'">order by b_num</when>
+    <when test="order_by=='b_date'">order by b_date</when>
+   </choose>
+   
+  <choose>
+    <when test="order_sc=='asc'"> asc</when>
+    <when test="order_sc=='desc'"> desc</when>
+   </choose>
+) list )
+
+  <where>
+  	<if test="start_row != null and start_row != ''">
+  		<if test="end_row != null and end_row !=''">
+				rnum between #{start_row} and #{end_row}  			
+  		 </if>
+  	</if>
+
+  	
+  	  	  	
+  </where>
+
+
+
+</select>
+
+<insert id="boardinsert" parameterType="board">
+
+insert into spring_board1 (b_num,b_name,b_title,b_content,b_pwd,b_date,hit,step,bgroup,bindent)
+values(spring_board1_seq.nextval,#{b_name},#{b_title},#{b_content},#{b_pwd},sysdate,0,0,0,0) 
+ 
+
+</insert>
+
+<select id="boarddetail" parameterType="board" resultType="board">
+
+ select b_num,b_name,b_title,b_content,b_pwd,b_date ,hit from spring_board1 where b_num=#{b_num}
+
+</select>
+
+
+<delete id="boarddelete" parameterType="board">
+
+	delete spring_board1 where b_num=#{b_num}
+
+</delete>
+
+
+<update id="boardupdate" parameterType="board">
+   update spring_board1 
+   set b_title=#{b_title} , b_content=#{b_content} , b_pwd=#{b_pwd} ,b_date=sysdate
+   where b_num=#{b_num}
+</update>
+
+
+<update id="hitmake" parameterType="board">
+update spring_board1 set hit=(hit+1) where b_num=#{b_num} 
+
+</update>
+
+
+<select id="boardListCnt" parameterType="board" resultType="int">
+
+
+ 
+ select NVL(count(1),0) 
+ 	from (select list.*,rownum as rnum 
+ 				from(<include refid="boardcommon"></include> order by b_num desc
+ 			)list 
+ 		 )
+ 
+ 
+</select>
+
+</mapper>
+

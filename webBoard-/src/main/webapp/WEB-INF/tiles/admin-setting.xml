@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+    <definition name="basic" template="/resources/template/admin2/root.jsp">
+         <put-attribute name="title" value="기본게시판" />
+         
+        
+         <put-attribute name="nobody" value="" />
+     
+    </definition>
+        
+    <definition name="admin2/*" extends="basic">
+      <put-attribute name="nobody" value="/WEB-INF/views/admin2/{1}.jsp" />
+    </definition>
+ 
+ 
+        
+</tiles-definitions>
+

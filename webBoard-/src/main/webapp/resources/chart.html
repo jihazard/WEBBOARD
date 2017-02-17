@@ -1,0 +1,157 @@
+<html>
+  <head>
+    <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    
+    
+    <script type="text/javascript">
+     var data;
+     var chart;
+     var obj;
+     var google_data;
+      // Load the Visualization API and the piechart package.
+      google.charts.load('current', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.charts.setOnLoadCallback(drawChart);
+
+     
+      function drawChart() {
+       var url="/admin2/adadmin.do";
+       var data = new google.visualization.DataTable();
+       var a1=new Array[];
+       var a2=new Array[];
+     	
+  
+       
+       $.ajax({
+           url : '/admin2/adadmin.do',
+           dataType:'text',
+           success : function(dataresult) {
+               //obj = JSON.stringify(Data)
+               alert('data : '+dataresult.length);
+               alert(dataresult)
+                        
+               data.addColumn('string', 'Topping');
+               data.addColumn('number', 'Slices');
+
+            
+               
+               
+               
+               /*  data.addRows([
+               ['Mushrooms', 3],
+               ['Onions', 1],
+               ['Olives', 1],
+               ['Zucchini', 1],
+               ['Pepperoni', 2]
+             ]);  */
+                	
+               var options = {'title':'How Much Pizza I Ate Last Night',
+                       'width':400,
+                       'height':300};
+
+       var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+       chart.draw(data, options);  
+        
+               
+           }
+           
+       
+       })
+       
+      
+ 	
+      }
+      /*  var data = new google.visualization.DataTable();    
+       
+       
+     	data = new google.visualization.DataTable();
+       data.addColumn('string', 'city');
+       data.addColumn('number', 'amount');
+       
+  		$.getJSON(url,function(data1){
+			console.log(data.length);
+			
+			
+			$(data1).each(function(){
+				var city=		this.city;
+				var amount=		this.amount;
+				
+			
+				data.addRows([city,amount])
+		          					
+				
+			})
+			
+		}).fail(function(){
+			alert("카테고리 불러오는데 실패했습니다.")
+		})
+          
+		  // Instantiate and draw our chart, passing in some options.
+        chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        google.visualization.events.addListener(chart, 'select', selectHandler);
+        chart.draw(data, options);
+    
+      
+		
+      }	
+		
+ */	
+	
+
+  /*         $.ajax({
+              url : '/admin2/adadmin.do',
+              dataType:'text',
+              success : function(data) {
+                  //obj = JSON.stringify(Data)
+                  alert('data : '+data.length);
+                  alert(data)
+                  /* for (var i=0; i<obj.length; i++) {
+					    var data = ""
+					    for (key in obj[i]) {
+					    data += key + " = " + obj[i][key] + " ";
+					    alert(data);
+					    }
+					    
+
+                  } */
+                                   
+              
+     /*          },
+                  error : function(xhr, type) {
+                  alert('server error occoured')
+              }
+          }); */ 
+    	  
+   
+          
+       
+          
+          
+         /*  data.addRows([
+            ['Mushrooms', 3],
+            ['Onions', 1],
+            ['Olives', 1],
+            ['Zucchini', 1],
+            ['Pepperoni', 2]
+          ]);  */
+        
+       
+    	  // Create our data table.
+       
+   
+      
+
+
+ 
+
+    </script>
+  </head>
+  <body>
+    <!--Div that will hold the pie chart-->
+    <div id="chart_div" style="width:400; height:300"></div>
+    <input type="button" id="btn" value="버튼고고" />
+  </body>
+</html>

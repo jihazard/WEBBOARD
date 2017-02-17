@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+    <definition name="content" template="/resources/template/user/root.jsp">
+         <put-attribute name="title" value="기본게시판" />
+         <put-attribute name="header" value="/resources/template/user/header.jsp" />
+         <put-attribute name="body" value="" />
+         <put-attribute name="footer" value="/resources/template/user/footer.jsp" />
+    </definition>
+        
+    <definition name="board/*" extends="content">
+      <put-attribute name="body" value="/WEB-INF/views/board/{1}.jsp" />
+    </definition>
+ 
+ 
+        
+</tiles-definitions>
+

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.reply.dao.ReplyDAO">
+
+<select id="replylist" parameterType="reply" resultType="reply">
+
+select r_num, r_name, r_content,r_pwd,r_date from spring_reply1 where b_num=#{b_num}
+
+</select>
+
+
+<insert id="replyinsert" parameterType="reply" >
+
+ insert into spring_reply1(r_num, r_name, r_content,r_pwd,r_date, b_num)
+                   values(spring_reply1_seq.nextval,#{r_name},#{r_content},#{r_pwd},sysdate,#{b_num})
+
+</insert>
+
+
+</mapper>
